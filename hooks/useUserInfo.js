@@ -7,6 +7,7 @@ export default function useUserInfo() {
   const [userInfo, setUserInfo] = useState();
   const [status, setStatus] = useState("loading");
 
+  // Todo: logine yollaması lazım yoksa user?id null hatası veriyor.
   function getUserInfo() {
     if (sessionStatus === "loading") {
       return;
