@@ -15,9 +15,10 @@ export default function PostPage() {
       return;
     }
     axios.get("/api/posts?id=" + id).then((response) => {
-      setPost(response.data);
+      setPost(response.data.post);
     });
   }, [id]);
+  
   return (
     <Layout>
       <div className="px-5 py-2">

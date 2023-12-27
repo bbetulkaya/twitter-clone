@@ -7,15 +7,18 @@ export default function useUserInfo() {
   const [userInfo, setUserInfo] = useState();
   const [status, setStatus] = useState("loading");
 
-  // Todo: logine yollaması lazım yoksa user?id null hatası veriyor.
   function getUserInfo() {
     if (sessionStatus === "loading") {
+      return;
+    }
+    if (!session?.user?.id) {
+      setStatus("unauthenticated");
       return;
     }
     fetch("/api/users?id=" + session.user.id).then((response) => {
       response.json().then((json) => {
         setUserInfo(json.user);
-        setStatus("done");
+        setStatus("authenticated");
       });
     });
   }
@@ -24,5 +27,5 @@ export default function useUserInfo() {
     getUserInfo();
   }, [sessionStatus]);
 
-  return { userInfo, status };
+  return { userInfo, setUserInfo, status };
 }
