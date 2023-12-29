@@ -9,12 +9,18 @@ export default async function handler(req, res) {
   const session = await getServerSession(req, res, authOptions);
 
   if (req.method === "POST") {
-    const { text } = req.body;
+    const { text, parent } = req.body;
     const post = await Post.create({
       author: session.user.id,
       text,
+      parent,
     });
-
+    if (parent) {
+      const parentPost = await Post.findById(parent);
+      parentPost.commentsCount = await Post.countDocuments({ parent });
+      await parentPost.save();
+      console.log(parentPost.commentsCount);
+    }
     res.status(201).json(post); // Respond with the created post
   }
 
@@ -24,7 +30,8 @@ export default async function handler(req, res) {
       const post = await Post.findById(id).populate("author");
       res.json({ post });
     } else {
-      const posts = await Post.find()
+      const parent = req.query.parent || null;
+      const posts = await Post.find({ parent })
         .populate("author")
         .sort({ createdAt: -1 })
         .limit(20)

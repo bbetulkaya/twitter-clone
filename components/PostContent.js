@@ -9,6 +9,7 @@ const PostContent = ({
   createdAt,
   _id,
   likesCount,
+  commentsCount,
   likedByMe,
   bigLayout = false,
 }) => {
@@ -31,10 +32,13 @@ const PostContent = ({
           </div>
           {!bigLayout && (
             <div>
-              <Link href={`/${author.name}/status/${_id}`}>{text}</Link>
+              <Link href={`/${author.name}/status/${_id}`}>
+                <div className="w-full cursor-pointer">{text}</div>
+              </Link>
               <PostButtons
                 id={_id}
                 likesCount={likesCount}
+                commentsCount={commentsCount}
                 likedByMe={likedByMe}
               />
             </div>
@@ -43,7 +47,9 @@ const PostContent = ({
       </div>
       {bigLayout && (
         <div className="mt-2">
-          <Link href={`/${author.name}/status/${_id}`}>{text}</Link>
+          <Link href={`/${author.name}/status/${_id}`}>
+            <div className="w-full cursor-pointer">{text}</div>
+          </Link>
           {createdAt && (
             <div className="text-twitterLightGray text-sm">
               {new Date(createdAt)
@@ -55,7 +61,12 @@ const PostContent = ({
                 .join(" ")}
             </div>
           )}
-          <PostButtons id={_id} likesCount={likesCount} likedByMe={likedByMe} />
+          <PostButtons
+            id={_id}
+            likesCount={likesCount}
+            commentsCount={commentsCount}
+            likedByMe={likedByMe}
+          />
         </div>
       )}
     </>

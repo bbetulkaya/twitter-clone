@@ -18,7 +18,6 @@ export default function Home() {
     axios.get("/api/posts").then((response) => {
       setPosts(response.data.posts);
       setIdsLikedByMe(response.data.idsLikedByMe);
-      console.log(response.data);
     });
   }
 
