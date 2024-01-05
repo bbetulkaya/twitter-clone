@@ -1,9 +1,11 @@
-const {model, models, Schema } = require("mongoose");
+const { model, models, Schema } = require("mongoose");
 
 const UserSchema = new Schema({
   name: String,
   email: String,
   image: String,
+  cover: String,
+  bio: String,
   username: String,
 });
 

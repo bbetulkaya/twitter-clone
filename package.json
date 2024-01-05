@@ -10,15 +10,20 @@
   },
   "dependencies": {
     "@auth/mongodb-adapter": "^2.0.9",
+    "@aws-sdk/client-s3": "^3.485.0",
+    "aws-sdk": "^2.1529.0",
     "axios": "^1.6.2",
     "javascript-time-ago": "^2.5.9",
     "mongodb": "^6.3.0",
     "mongoose": "^8.0.3",
+    "multiparty": "^4.2.3",
     "next": "14.0.4",
     "next-auth": "^4.24.5",
     "react": "^18",
     "react-dom": "^18",
+    "react-file-drop": "^3.1.6",
     "react-flip-numbers": "^3.0.8",
+    "react-spinners": "^0.13.8",
     "react-time-ago": "^7.2.1"
   },
   "devDependencies": {

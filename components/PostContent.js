@@ -17,13 +17,23 @@ const PostContent = ({
     <>
       <div className="flex w-full">
         <div>
-          <Avatar src={author.image} />
+          {!!author.image && (
+            <Link href={"/" + author?.username}>
+              <div className="cursor-pointer">
+                <Avatar src={author.image} />
+              </div>
+            </Link>
+          )}
         </div>
         <div className="pl-2 grow">
           <div>
-            <span className="font-bold pr-1">{author.name}</span>
+            <Link href={"/" + author?.username}>
+              <span className="font-bold pr-1">{author.name}</span>
+            </Link>
             {bigLayout && <br />}
-            <span className="text-twitterLightGray">@{author.username}</span>
+            <Link href={"/" + author?.username}>
+              <span className="text-twitterLightGray">@{author.username}</span>
+            </Link>
             {createdAt && !bigLayout && (
               <span className="pl-1 text-twitterLightGray">
                 <ReactTimeAgo date={createdAt} timeStyle="twitter" />
