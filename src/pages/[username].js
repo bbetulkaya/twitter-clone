@@ -6,13 +6,16 @@ import axios from "axios";
 import Cover from "../../components/Cover";
 import Avatar from "../../components/Avatar";
 import PostContent from "../../components/PostContent";
+import useUserInfo from "../../hooks/useUserInfo";
 
 export default function UserPage() {
   const router = useRouter();
   const { username } = router.query;
   const [profileInfo, setProfileInfo] = useState();
+  const { userInfo } = useUserInfo();
   const [posts, setPosts] = useState([]);
   const [postsLikedByMe, setPostsLikedByMe] = useState([]);
+  const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
     if (!username) return;
@@ -34,6 +37,8 @@ export default function UserPage() {
   function updateUserImage(type, src) {
     setProfileInfo((prev) => ({ ...prev, [type]: src }));
   }
+
+  const isMyProfile = profileInfo?._id === userInfo?._id;
   return (
     <>
       <Layout>
@@ -60,16 +65,59 @@ export default function UserPage() {
               </div>
 
               <div className="p-2">
-                <button className="bg-twitterBlue text-white py-2 px-5 rounded-full">
-                  Follow
-                </button>
+                {!isMyProfile && (
+                  <button className="bg-twitterBlue text-white py-2 px-5 rounded-full">
+                    Follow
+                  </button>
+                )}
+
+                {isMyProfile && (
+                  <div>
+                    {!editMode && (
+                      <button
+                        onClick={() => setEditMode(true)}
+                        className="bg-twitterBlue text-white py-2 px-5 rounded-full"
+                      >
+                        Edit profile
+                      </button>
+                    )}
+
+                    {editMode && (
+                      <div>
+                        <button
+                          onClick={() => setEditMode(false)}
+                          className="bg-twitterWhite text-black py-2 px-5 rounded-full mr-2"
+                        >
+                          Cancel
+                        </button>
+
+                        <button
+                          onClick={() => setEditMode(false)}
+                          className="bg-twitterBlue text-white py-2 px-5 rounded-full"
+                        >
+                          Save Profile
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
-            <div className="px-5 mt-2">
-              <h1 className="font-bold text-xl leading-5">
-                {profileInfo.name}
-              </h1>
-              <h2 className="text-twitterLightGray text-sm">
+            <div className="px-5">
+              {!editMode && (
+                <h1 className="font-bold text-xl leading-5">
+                  {profileInfo.name}
+                </h1>
+              )}
+
+              {editMode && (
+                <input
+                  type="text"
+                  value={profileInfo.name}
+                  className="bg-twitterBorder text-white rounded-full p-2 mb-1"
+                />
+              )}
+              <h2 className="text-twitterLightGray text-sm mt-1">
                 @{profileInfo.username}
               </h2>
               <div className="text-sm mt-2 mb-2">bio bio bio</div>
