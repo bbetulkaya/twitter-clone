@@ -5,9 +5,6 @@ export default function LoginPage({ providers }) {
   const { data, status } = useSession();
   const router = useRouter();
   
-  if (status === "loading") {
-    return "";
-  }
   if (data) {
     router.push("/");
   }
