@@ -4,9 +4,14 @@ import { useRouter } from "next/router";
 export default function LoginPage({ providers }) {
   const { data, status } = useSession();
   const router = useRouter();
-  
+
   if (data) {
     router.push("/");
+  }
+
+  // Check if providers is not undefined or null before rendering
+  if (!providers) {
+    return <div>Loading...</div>; // Display a loading message or any placeholder you prefer
   }
 
   return (
@@ -31,6 +36,6 @@ export default function LoginPage({ providers }) {
 export async function getServerSideProps() {
   const providers = await getProviders();
   return {
-    props: { providers },
+    props: { providers: providers || null },
   };
 }
