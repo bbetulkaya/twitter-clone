@@ -39,7 +39,7 @@ export default async function handler(req, res) {
         .limit(20)
         .exec();
       const postsLikedByMe = Like.find({
-        author: session.user.id,
+        author: session?.user.id,
         post: posts.map((p) => p._id),
       });
       const idsLikedByMe = (await postsLikedByMe).map((like) => like.post);
